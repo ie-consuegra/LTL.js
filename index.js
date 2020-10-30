@@ -7,7 +7,7 @@ const tree = T('div', 'main-wrapper');
 // Title component
 const brandLogo = T('a', 'brand-logo');
 brandLogo.html('My App');
-console.log(brandLogo.elements);
+
 // Nav menu
 const navMenuUl = T('ul', 'right');
 /*
@@ -43,6 +43,16 @@ const half = T('div', ['col', 's12', 'm6']);
 const card = T('div', ['card-panel', 'grey', 'lighten-5']);
 
 const cardMessage = T('span');
+cardMessage.html('Hey esto es una prueba');
+
+/*
+  .L(T('header')
+    .L(T('nav')
+      .L(T('div', 'nav-wrapper')
+        .L(brandLogo)
+        .L(navMenuUl))))
+*/
+
 
 tree
   .L(T('header')
@@ -54,12 +64,10 @@ tree
     .L(section
       .L(row
         .L(half
-          .L(card
-            .L(rowVAlign
-              .L(cardMessage.html('LTL.js is experimental do not take it so serious yet')))))
+          .L(card))
         .L(half
           .L(card
             .L(rowVAlign
-              .L(cardMessage.html('Hey it works!'))))))));
+              .L(cardMessage)))))));
 
 root.graft(tree);

@@ -26,15 +26,18 @@ function T(tag, classList, ID) {
     }
 
     L(component) {
-      // Each time L is called appendChilds an element to
-      // the last element in the elements array
+      // L appendChilds an element to the last element in the elements array
 
-      // Create a new element and store it
-      this.elements.push(this.newElement());
+      // Check first if there is no element yet, to create the first one
+      if (!this.elements[0]) {
+        this.newElement();
+      }
+
+      // Request an element from component and append it
+      console.log(this.elements[0]);
+      console.log(this.elemIndex);
       if (typeof component === 'object') {
-        this.elemIndex = this.elements.length - 1;
-
-        this.elements[this.elemIndex].appendChild(component.getElements()[component.elemIndex]);
+        this.elements[this.elemIndex].appendChild(component.getElement());
       }
       return this;
     }
@@ -78,17 +81,24 @@ function T(tag, classList, ID) {
       }
       element.innerHTML = this.template.html;
 
+      // Push it to elements array
+      // Save the current element index
+      this.elemIndex = this.elements.push(element) - 1;
+
       return element;
     }
 
-    getElements() {
-      // If there is no element created, create the first one
+    getElement() {
+      // Return the last element of the array if exists, else return a new one
+
+      let element;
       if (!this.elements[0]) {
-        if (this.template.tagName) {
-          this.elemIndex = this.elements.push(this.newElement()) - 1;
-        }
+        element = this.newElement();
+      } else {
+        element = this.elements[this.elemIndex];
       }
-      return this.elements;
+
+      return element;
     }
   }
 
