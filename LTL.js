@@ -29,16 +29,15 @@ function T(tag, classList, ID) {
       // L appendChilds an element to the last element in the elements array
 
       // Check first if there is no element yet, to create the first one
-      if (!this.elements[0]) {
+      if (!this.elements[this.elemIndex]) {
         this.newElement();
       }
 
       // Request an element from component and append it
-      console.log(this.elements[0]);
-      console.log(this.elemIndex);
       if (typeof component === 'object') {
         this.elements[this.elemIndex].appendChild(component.getElement());
       }
+      component.elemIndexForward();
       return this;
     }
 
@@ -90,15 +89,18 @@ function T(tag, classList, ID) {
 
     getElement() {
       // Return the last element of the array if exists, else return a new one
-
       let element;
-      if (!this.elements[0]) {
+      if (!this.elements[this.elemIndex]) {
         element = this.newElement();
       } else {
         element = this.elements[this.elemIndex];
       }
 
       return element;
+    }
+
+    elemIndexForward() {
+      this.elemIndex += 1;
     }
   }
 

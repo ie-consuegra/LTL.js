@@ -40,8 +40,8 @@ const section = T('div', 'section');
 const row = T('div', 'row');
 const rowVAlign = T('div', ['row', 'valign-wrapper']);
 const half = T('div', ['col', 's12', 'm6']);
-const card = T('div', ['card-panel', 'grey', 'lighten-5']);
-
+const blueCard = T('div', ['card-panel', 'blue', 'lighten-5']);
+const redCard = T('div', ['card-panel', 'red', 'lighten-5']);
 const cardMessage = T('span');
 cardMessage.html('Hey esto es una prueba');
 
@@ -64,10 +64,8 @@ tree
     .L(section
       .L(row
         .L(half
-          .L(card))
+          .L(redCard))
         .L(half
-          .L(card
-            .L(rowVAlign
-              .L(cardMessage)))))));
+          .L(blueCard)))));
 
 root.graft(tree);
