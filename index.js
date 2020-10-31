@@ -2,7 +2,6 @@
 import T from './LTL.js';
 
 const root = T().setAsRoot('my-app');
-const tree = T('div', 'main-wrapper');
 
 // Title component
 const brandLogo = T('a', 'brand-logo');
@@ -43,18 +42,8 @@ const half = T('div', ['col', 's12', 'm6']);
 const blueCard = T('div', ['card-panel', 'blue', 'lighten-5']);
 const redCard = T('div', ['card-panel', 'red', 'lighten-5']);
 const cardMessage = T('span');
-cardMessage.html('Hey esto es una prueba');
 
-/*
-  .L(T('header')
-    .L(T('nav')
-      .L(T('div', 'nav-wrapper')
-        .L(brandLogo)
-        .L(navMenuUl))))
-*/
-
-
-tree
+root
   .L(T('header')
     .L(T('nav')
       .L(T('div', 'nav-wrapper')
@@ -67,5 +56,3 @@ tree
           .L(redCard.L(rowVAlign.L(cardMessage.html('Red card')))))
         .L(half
           .L(blueCard.L(rowVAlign.L(cardMessage.html('Blue card'))))))));
-
-root.graft(tree);

@@ -60,12 +60,6 @@ function T(tag, classList, ID) {
       return this;
     }
 
-    graft(tree) {
-      if (this.isRoot) {
-        this.elements[0].appendChild(tree.elements[0]);
-      }
-    }
-
     newElement() {
       const element = document.createElement(this.template.tagName);
       if (this.template.classes) {
