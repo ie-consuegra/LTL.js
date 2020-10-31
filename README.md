@@ -1,5 +1,5 @@
 # LTL.js
-A tiny experimental library to create dynamic webapps.
+A tiny experimental library to create SPAs.
 
 ## Concept
 Create reusable components that can be used in a visual representation of the DOM tree afterwards.
@@ -15,18 +15,12 @@ const header = T('header');
 Creation of the tree:
 
 ```
-tree
+root
   .L(header
     .L(nav
       .L(navBar))
   .L(main)
   .L(footer);
-```
-
-Appending the tree to the root (now it is visible to the user):
-
-```
-root.graft(tree)
 ```
 
 ## How to use it
@@ -57,7 +51,7 @@ sendBtn.attrs = {
 ```
 
 ### The L Method
-The L method appends a child. The use of this capital letter is to create a visual representation of a tree, it is not based in any specific word.
+The L method appends an element created with the characteristics of the template passed as a parameter. The use of a capital L has no special meaning but just create a visual representation of a tree.
 
 ```
 navBar
@@ -71,3 +65,6 @@ navBar
     .L(logoImg))
   .L(menu);
 ```
+
+## Why LTL.js
+The purpose of LTL.js is to provide a simple and tiny library, one can use on the development of Simple Page Applications in projects where the use of bigger libraries or frameworks can represent a problem or be even impossible to use. In my personal case, apps created using Google Apps Script.
