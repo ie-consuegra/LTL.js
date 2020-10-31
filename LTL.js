@@ -41,7 +41,7 @@ function T(tag, classList, ID) {
       return this;
     }
 
-    html(htmlString, overwrite) {
+    html(htmlString, overwrite = true) {
       if (overwrite) {
         this.template.html = htmlString;
       } else {

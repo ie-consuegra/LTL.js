@@ -64,8 +64,8 @@ tree
     .L(section
       .L(row
         .L(half
-          .L(redCard))
+          .L(redCard.L(rowVAlign.L(cardMessage.html('Red card')))))
         .L(half
-          .L(blueCard)))));
+          .L(blueCard.L(rowVAlign.L(cardMessage.html('Blue card'))))))));
 
 root.graft(tree);
