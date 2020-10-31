@@ -7,6 +7,11 @@ const root = T().setAsRoot('my-app');
 const brandLogo = T('a', 'brand-logo');
 brandLogo.html('My App');
 
+// Function to test the menu
+function load(content) {
+  brandLogo.elements[0].innerHTML = content;
+}
+
 // Nav menu
 const navMenuUl = T('ul', ['right', 'hide-on-med-and-down']);
 
@@ -27,10 +32,13 @@ const navMenuItemsArr = [
 
 navMenuItemsArr.forEach((item) => {
   const navMenuItem = T('li');
-  navMenuItem.html(`<a href="${item.href}">${item.text}</a>`);
-
+  navMenuItem.html(`<a href="#">${item.text}</a>`);
   navMenuUl
     .L(navMenuItem);
+
+  navMenuItem.elements[0].addEventListener('click', () => {
+    load(item.text);
+  });
 });
 
 // Common components
@@ -56,4 +64,8 @@ root
           .L(half
             .L(redCard.L(rowVAlign.L(cardMessage.html('Red card')))))
           .L(half
-            .L(blueCard.L(rowVAlign.L(cardMessage.html('Blue card')))))))));
+            .L(blueCard.L(rowVAlign.L(cardMessage.html('Blue card')))))))))
+  .L(T('footer', 'page-footer')
+    .L(container
+      .L(row
+        .L(half.L(T('p', 'white-text').html('Footer'))))));
