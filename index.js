@@ -8,8 +8,8 @@ const brandLogo = T('a', 'brand-logo');
 brandLogo.html('My App');
 
 // Nav menu
-const navMenuUl = T('ul', 'right');
-/*
+const navMenuUl = T('ul', ['right', 'hide-on-med-and-down']);
+
 const navMenuItemsArr = [
   {
     text: 'Marketplace',
@@ -31,7 +31,7 @@ navMenuItemsArr.forEach((item) => {
 
   navMenuUl
     .L(navMenuItem);
-}); */
+});
 
 // Common components
 const container = T('div', 'container');
@@ -49,10 +49,11 @@ root
       .L(T('div', 'nav-wrapper')
         .L(brandLogo)
         .L(navMenuUl))))
-  .L(container
-    .L(section
-      .L(row
-        .L(half
-          .L(redCard.L(rowVAlign.L(cardMessage.html('Red card')))))
-        .L(half
-          .L(blueCard.L(rowVAlign.L(cardMessage.html('Blue card'))))))));
+  .L(T('main')
+    .L(container
+      .L(section
+        .L(row
+          .L(half
+            .L(redCard.L(rowVAlign.L(cardMessage.html('Red card')))))
+          .L(half
+            .L(blueCard.L(rowVAlign.L(cardMessage.html('Blue card')))))))));
