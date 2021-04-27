@@ -1,26 +1,31 @@
-function T(tag, classList, ID) {
+function T(tag, attributes, innerHTML) {
   class Component {
-    constructor(tagName, classes, id) {
+    /** Set the basic properties of the Component
+     *
+     * @param {String} tagName HTML tag of the element
+     * @param {Object} attrs Set of attributes of the HTML element. i.e. class, id, etc.
+     * @param {String} html Define innerHTML property of the HTML element
+     */
+    constructor(tagName, attrs, html) {
       this.template = {}; // Template of the element
       this.elements = []; // Array of elements created with the template
       this.elemIndex = 0; // The index of the first element to be created
+      this.isUnique = false; // If the template only will store one node is unique
+      // else is false (default) create a new element each time is required
 
+      // Set the basic properties of the component
+      this.template.html = '';
       if (tagName) {
         this.template.tagName = tagName;
       }
 
-      if (classes) {
-        if ((typeof classes) === 'string') {
-          this.template.classes = classes;
-        } else if ((typeof classes) === 'object') {
-          this.template.classes = [...classes];
-        }
+      if (attrs) {
+        this.template.attrs = { ...attrs };
       }
-      if (id) {
-        this.template.id = id;
+
+      if (innerHTML) {
+        this.template.html = html;
       }
-      this.template.attrs = {};
-      this.template.html = '';
 
       this.isRoot = false;
     }
@@ -37,7 +42,9 @@ function T(tag, classList, ID) {
       if (typeof component === 'object') {
         this.elements[this.elemIndex].appendChild(component.getElement());
       }
-      component.elemIndexForward();
+      if (!component.isUnique) {
+        component.elemIndexForward();
+      }
       return this;
     }
 
@@ -62,16 +69,8 @@ function T(tag, classList, ID) {
 
     newElement() {
       const element = document.createElement(this.template.tagName);
-      if (this.template.classes) {
-        if ((typeof this.template.classes) === 'string') {
-          element.classList.add(this.template.classes);
-        } else if ((typeof this.template.classes) === 'object') {
-          element.classList.add(...this.template.classes);
-        }
-      }
-      if (this.template.id) {
-        element.id = this.template.id;
-      }
+      this.setAttributes(element);
+
       element.innerHTML = this.template.html;
 
       // Push it to elements array
@@ -96,9 +95,38 @@ function T(tag, classList, ID) {
     elemIndexForward() {
       this.elemIndex += 1;
     }
+
+    _() {
+      // Deattach any child
+      // Use only if the element is unique
+      if (this.isUnique) {
+        if (!this.elements[this.elemIndex]) {
+          this.newElement();
+        }
+        this.elements[0].innerHTML = '';
+      } else {
+        throw new Error('_() Method to be used only in unique components');
+      }
+      return this;
+    }
+
+    setAttributes(element) {
+      if (this.template.attrs) {
+        const attrsArr = Object.keys(this.template.attrs);
+        attrsArr.forEach((name) => {
+          const value = this.template.attrs[name];
+          if (typeof value === 'string') {
+            element.setAttribute(name, value);
+          } else if (Array.isArray(value)) {
+            const severalAttrsValues = value.join(' ');
+            element.setAttribute(name, severalAttrsValues);
+          }
+        });
+      }
+    }
   }
 
-  const component = new Component(tag, classList, ID);
+  const component = new Component(tag, attributes, innerHTML);
   return component;
 }
 

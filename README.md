@@ -2,7 +2,7 @@
 A tiny experimental library to create SPAs.
 
 ## Concept
-Create reusable components that can be used in a visual representation of the DOM tree afterwards.
+Create reusable or non-reusable components that can be used in a visual representation of the DOM tree afterwards.
 
 For example:
 
@@ -15,6 +15,10 @@ const header = T('header');
 Creation of the tree:
 
 ```
+// Code to import or create the components: header, nav, navBar, main, footer...
+
+const root = T().setAsRoot('body');
+
 root
   .L(header
     .L(nav
@@ -24,47 +28,50 @@ root
 ```
 
 ## How to use it
-LTL.js is still in development so, some features can change with time.
+If you are writing your JavaScript in diferent modules, import the T function from the LTL.js file wherever you have downloaded it.
+
+```
+import T from './LTL.js';
+```
+
+LTL.js is still in development so, many features can change with time.
 
 ### The T function
-The T function returns an object with the characteristics of any element to be created with it.
-"T" comes from Template. These object also stores all the elements created by itself.
+Anytime you want to create a new "component" you use the T() function. This function returns and object able to add elements to the DOM anytime is passed as an argument to the L() method.
 
+The T function gets three arguments: the HTML tag (String), attributes (Object, where keys are the names of the attributes and values that can be a string or an array), the inner HTML of the element.
 
-The T function can get three parameters, the tagName, the class (string) or classes (array of strings) and an id.
-In this example, we create a template of a button with a "red" class, and a "send" Id
+In this example, we create a "component" of a button with a "red" class, a "send-button" Id, and the inner HTML will be 'Send'.
 ```
-const sendBtn = T('button', 'red', 'send')
+const sendBtn = T('button', { class: 'red', id: 'send-button' }, 'Send')
 ```
-To set the default text this button will have, we set its innerHtml this way:
+Whenever you want to set or change the default text of this button, do it this way:
 ```
-sendBtn.html('send')
+sendBtn.html('Submit')
 ```
-
-To set other attributes, we can modify the "attrs" property:
-(This feature is not ready yet)
-
-```
-sendBtn.attrs = {
-  type: 'submit'
-};
-```
-
 ### The L Method
-The L method appends an element created with the characteristics of the template passed as a parameter. The use of a capital L has no special meaning but just create a visual representation of a tree.
+The L method appends a component, which is passed as an argument. The use of a capital L has no special meaning but just help to represent a tree visually.
 
 ```
 navBar
   .L(logo)
   .L(menu);
 ```
-In case of creating a component directly in the tree, the T function accomplish a similar visual effect.
+In case of creating a component directly in the tree, the T function accomplishes a similar visual effect.
 ```
 navBar
-  .L(T('a', 'logo')
+  .L(T('a', { class: 'logo' })
     .L(logoImg))
   .L(menu);
 ```
+This way of creating anonymous components "on the fly" can be useful when it is a simple and non-reusable component.
 
 ## Why LTL.js
-The purpose of LTL.js is to provide a simple and tiny library, one can use on the development of Simple Page Applications in projects where the use of bigger libraries or frameworks can represent a problem or be even impossible to use. In my personal case, apps created using Google Apps Script.
+The purpose of LTL.js is to provide a way to create a SPA while creating a visual representation of the DOM tree using JavaScript.
+
+### Disclosure
+LTL.js is merely experimental and it's a way I can improve my coding skills in JS while setting up a tiny library I could use in my personal projects in the future.
+
+It is so obvious but I have to warn about not using this library in production.
+
+Thanks for reading up to this point.
