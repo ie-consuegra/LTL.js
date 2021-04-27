@@ -34,6 +34,12 @@ const half = T('div', { class: ['col', 's12', 'm6'] });
 const blueCard = T('div', { class: ['card-panel', 'blue', 'lighten-5'] });
 const redCard = T('div', { class: ['card-panel', 'red', 'lighten-5'] });
 const cardMessage = T('span');
+const button = T('a', { class: ['waves-effect', 'waves-light', 'btn', 'red'] }, 'Change color');
+button.isUnique = true;
+button.onClick(() => {
+  button.removeAttributes({ class: 'red' });
+  button.addAttributes({ class: 'deep-purple' });
+});
 
 const contentWrapper = T('div', { class: 'section', id: 'content-wrapper' });
 contentWrapper.isUnique = true;
@@ -72,7 +78,7 @@ marketplace._()
       .L(blueCard.L(rowVAlign.L(cardMessage.html('Blue card Marketplace'))))))
   .L(row
     .L(half.L(blueCard))
-    .L(half.L(redCard)));
+    .L(half.L(redCard.L(button))));
 
 // contact component tree
 contact._()

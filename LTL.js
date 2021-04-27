@@ -130,6 +130,47 @@ function T(tag, attributes, innerHTML) {
       }
     }
 
+    addAttributes(attributeObj, overwrite = false) {
+      const attrsArr = Object.entries(attributeObj);
+      attrsArr.forEach(([name, value]) => {
+        if (overwrite) {
+          this.elements[this.elemIndex].setAttribute(name, value);
+        } else {
+          const attributeValue = this.elements[this.elemIndex].getAttribute(name);
+          let newValue;
+          if (typeof value === 'string') {
+            newValue = `${attributeValue} ${value}`;
+          } else if (Array.isArray(value)) {
+            newValue = `${attributeValue} ${value.join(' ')}`;
+          }
+          this.elements[this.elemIndex].setAttribute(name, newValue);
+        }
+      });
+    }
+
+    removeAttributes(attributeObj) {
+      const attrsArr = Object.entries(attributeObj);
+      attrsArr.forEach(([name, value]) => {
+        if (value === '') {
+          this.elements[this.elemIndex].removeAttribute(name);
+        } else {
+          const attributeValue = this.elements[this.elemIndex].getAttribute(name);
+          let newValue;
+          if (typeof value === 'string') {
+            const attributeValueArr = attributeValue.split(' ');
+            const index = attributeValueArr.indexOf(value);
+            if (index !== -1) {
+              attributeValueArr.splice(index, 1);
+              newValue = attributeValueArr.join(' ');
+              this.elements[this.elemIndex].setAttribute(name, newValue);
+            }
+          } else if (Array.isArray(value)) {
+            // Pending...
+          }
+        }
+      });
+    }
+
     onClick(callback) {
       this.whenClicked = callback;
     }
