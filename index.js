@@ -5,10 +5,11 @@ const root = T().setAsRoot('my-app');
 
 // Title component
 const brandLogo = T('a', { class: 'brand-logo' }, 'My app');
+brandLogo.isUnique = true;
 
 // Function to test the menu
 function load(content) {
-  brandLogo.elements[0].innerHTML = content;
+  brandLogo.html(content);
   switch (content) {
     case 'Marketplace':
       renderMarketplace();

@@ -54,6 +54,9 @@ function T(tag, attributes, innerHTML) {
       } else {
         this.template.html += htmlString;
       }
+      if (this.isUnique) {
+        this.elements[0].innerHTML = this.template.html;
+      }
       return this;
     }
 
