@@ -7,21 +7,6 @@ const root = T().setAsRoot('my-app');
 const brandLogo = T('a', { class: 'brand-logo' }, 'My app');
 brandLogo.isUnique = true;
 
-// Function to test the menu
-function load(content) {
-  brandLogo.html(content);
-  switch (content) {
-    case 'Marketplace':
-      renderMarketplace();
-      break;
-    case 'Contact':
-      renderContact();
-      break;
-    default:
-      break;
-  }
-}
-
 // Nav menu
 const navMenuUl = T('ul', { class: ['right', 'hide-on-med-and-down'] });
 
@@ -40,17 +25,6 @@ const navMenuItemsArr = [
   },
 ];
 
-navMenuItemsArr.forEach((item) => {
-  const navMenuItem = T('li', null, `<a href="#">${item.text}</a>`);
-
-  navMenuUl
-    .L(navMenuItem);
-
-  navMenuItem.elements[0].addEventListener('click', () => {
-    load(item.text);
-  });
-});
-
 // Common components
 const container = T('div', { class: 'container' });
 // const section = T('div', 'section');
@@ -67,6 +41,27 @@ const contact = T('div', { class: 'content', id: 'contact' });
 contact.isUnique = true;
 const marketplace = T('div', { class: 'content', id: 'marketplace-content' });
 marketplace.isUnique = true;
+
+// Test interactivity of the menu
+navMenuItemsArr.forEach((item) => {
+  const navMenuItem = T('li', null, `<a href="#">${item.text}</a>`);
+  navMenuItem.onClick(() => {
+    brandLogo.html(item.text);
+    switch (item.text) {
+      case 'Marketplace':
+        contentWrapper._().L(marketplace);
+        break;
+      case 'Contact':
+        contentWrapper._().L(contact);
+        break;
+      default:
+        break;
+    }
+  });
+
+  navMenuUl
+    .L(navMenuItem);
+});
 
 // marketplace component tree
 marketplace._()
@@ -103,11 +98,3 @@ root
     .L(container
       .L(row
         .L(half.L(T('p', { class: 'white-text' }, 'footer'))))));
-
-function renderMarketplace() {
-  contentWrapper._().L(marketplace);
-}
-
-function renderContact() {
-  contentWrapper._().L(contact);
-}

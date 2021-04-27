@@ -9,7 +9,7 @@ function T(tag, attributes, innerHTML) {
     constructor(tagName, attrs, html) {
       this.template = {}; // Template of the element
       this.elements = []; // Array of elements created with the template
-      this.elemIndex = 0; // The index of the first element to be created
+      this.elemIndex = 0; // The index of the first element to be created and a pointer
       this.isUnique = false; // If the template only will store one node is unique
       // else is false (default) create a new element each time is required
 
@@ -76,6 +76,8 @@ function T(tag, attributes, innerHTML) {
 
       element.innerHTML = this.template.html;
 
+      this.setEvents(element);
+
       // Push it to elements array
       // Save the current element index
       this.elemIndex = this.elements.push(element) - 1;
@@ -125,6 +127,16 @@ function T(tag, attributes, innerHTML) {
             element.setAttribute(name, severalAttrsValues);
           }
         });
+      }
+    }
+
+    onClick(callback) {
+      this.whenClicked = callback;
+    }
+
+    setEvents(element) {
+      if (this.whenClicked) {
+        element.addEventListener('click', this.whenClicked);
       }
     }
   }
